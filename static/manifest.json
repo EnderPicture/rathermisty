@@ -1,0 +1,16 @@
+{
+	"name": "rathermisty",
+	"short_name": "rathermisty",
+	"start_url": "/",
+	"display": "standalone",
+	"background_color": "#ffffff",
+	"lang": "en",
+	"scope": "/",
+	"description": "a weather app",
+	"theme_color": "#5f8ace",
+	"icons": [
+		{ "src": "pwa-192x192.png", "sizes": "192x192", "type": "image/png" },
+		{ "src": "pwa-512x512.png", "sizes": "512x512", "type": "image/png" },
+		{ "src": "pwa-512x512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+	]
+}
