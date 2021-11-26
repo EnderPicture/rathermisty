@@ -11,7 +11,7 @@
 
 <style lang="scss">
 	.search {
-		max-width: 50rem;
+		max-width: $width;
 		margin: auto;
 	}
 </style>
