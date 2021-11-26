@@ -1,7 +1,17 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<section class="search">
+	<script lang="ts">
+		let location = '';
+	</script>
 
+	<h2>where weather?</h2>
+	<input type="text" />
 
-<h1>test test test</h1>
+	<p />
+</section>
 
-<a href="/about">about</a>
+<style lang="scss">
+	.search {
+		max-width: 50rem;
+		margin: auto;
+	}
+</style>
