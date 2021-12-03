@@ -21,14 +21,13 @@
 	}
 
 	:global(body) {
+		--color-main-light: #{$blue-light};
 
-		--color-main-light: $blue-light;
-
-		--color-main-dark-4: #{lighten($blue-dark, 20)};
-		--color-main-dark-3: #{lighten($blue-dark, 15)};
-		--color-main-dark-2: #{lighten($blue-dark, 10)};
+		--color-main-dark-4: #{lighten($blue-dark, 14)};
+		--color-main-dark-3: #{lighten($blue-dark, 11)};
+		--color-main-dark-2: #{lighten($blue-dark, 8)};
 		--color-main-dark-1: #{lighten($blue-dark, 5)};
-		--color-main-dark-0: #{$blue-dark};
+		--color-main-dark: #{$blue-dark};
 
 		margin: 0;
 		font-family: 'Montserrat', sans-serif;
@@ -38,6 +37,17 @@
 
 		background-color: $blue-dark;
 		color: #fffe;
+	}
+
+	:global(:where(button, input, a)) {
+		box-shadow: 0 0 0 0px #fff0;
+		transition: box-shadow 0.5s ease;
+		&:focus {
+			z-index: 10;
+			transition: box-shadow 0.1s ease;
+			box-shadow: 0 0 0 2px #ffff;
+			outline: none;
+		}
 	}
 
 	:global(*) {

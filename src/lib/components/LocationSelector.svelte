@@ -38,8 +38,16 @@
 <section class="search">
 	<h2>please enter in location</h2>
 	<form on:submit|preventDefault={() => searchLocation(queryValue)}>
-		<input type="text" name="query" bind:value={queryValue} placeholder="ex: vancouver" size="1" />
-		<button>search</button>
+		<div>
+			<input
+				type="text"
+				name="query"
+				bind:value={queryValue}
+				placeholder="ex: vancouver"
+				size="1"
+			/>
+			<button>search</button>
+		</div>
 	</form>
 	<div class="dropdown">
 		<div class="items">
@@ -49,10 +57,14 @@
 					in:fly={{ y: -20, duration: 500 }}
 					out:fly={{ y: 20, duration: 500 }}
 					animate:flip={{ delay: 1000 }}
+					on:click={() => console.log('hi')}
 				>
 					<div class="con">
-						<p class="title">{feature.properties.name || ''}</p>
-						<p>{feature.properties.state || ''} {feature.properties.country || ''}</p>
+						<div class="left">
+							<p class="title">{feature.properties.name || ''}</p>
+							<p>{feature.properties.state || ''} {feature.properties.country || ''}</p>
+						</div>
+						<p class="right">+</p>
 					</div>
 				</button>
 			{/each}
@@ -62,24 +74,38 @@
 
 <style lang="scss">
 	.search {
-		max-width: $width;
-		padding-right: $side-padding;
-		padding-left: $side-padding;
-		margin: auto;
+		background-image: linear-gradient(to bottom, var(--color-main-light), var(--color-main-dark));
+
+		> * {
+			padding-right: $side-padding;
+			padding-left: $side-padding;
+			max-width: $width;
+			margin-left: auto;
+			margin-right: auto;
+		}
 	}
 
 	form {
-		display: flex;
+		> div {
+			background-color: var(--color-main-dark-1);
+			display: flex;
+			border-radius: 6px;
+		}
 		input {
 			flex: 1;
+			border-radius: 6px 0 0 6px;
+		}
+		button {
+			border-radius: 0 6px 6px 0;
 		}
 		input,
 		button {
 			border: none;
 			font-size: 1rem;
 			padding: 0.5rem 1rem;
-			background-color: #fff1;
+			background-color: var(--color-main-dark-2);
 			color: #fffe;
+			transform: translateY(-0.2rem);
 			&::placeholder {
 				color: #fff6;
 			}
@@ -88,8 +114,9 @@
 
 	.items {
 		display: grid;
-		grid-template-rows: repeat(15, 2.5rem);
-		gap: .5rem;
+		grid-template-rows: repeat(15, minmax(2.5rem, auto));
+		gap: 0.5rem;
+		margin-top: 0.5rem;
 	}
 	.item {
 		display: block;
@@ -97,25 +124,43 @@
 		width: 100%;
 		text-align: start;
 		color: #fffe;
-		background-color: var(--color-main-dark-2);
+		background-color: var(--color-main-dark-1);
 		padding: 0;
+		border-radius: 6px;
 		.con {
 			height: 100%;
 			width: 100%;
-			padding: 0 0.5rem;
-			background-color: var(--color-main-dark-1);
+			padding: 0.1rem 1rem;
+			background-color: var(--color-main-dark-2);
 			transition: transform 0.5s ease;
+			transform: translateY(-0.2rem);
+			border-radius: 6px;
 			display: flex;
-			flex-direction: column;
-			justify-content: center;
-			> p {
+			align-items: center;
+			.left {
+				flex: 1;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+			}
+			.right {
+				font-size: 2rem;
+			}
+			p {
 				margin: 0;
 			}
 		}
 		&:hover {
+			cursor: pointer;
 			.con {
 				transition: transform 0.1s ease;
-				transform: translateY(-0.5rem);
+				transform: translateY(-0.4rem);
+			}
+		}
+		&:active {
+			.con {
+				transition: transform 0.1s ease;
+				transform: translateY(-0rem);
 			}
 			cursor: pointer;
 		}
