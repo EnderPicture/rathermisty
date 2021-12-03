@@ -1,9 +1,9 @@
-import type { Properties } from '$lib/types/photon-api';
+import type { Feature } from '$lib/types/photon-api';
 
 export interface WeatherLocation {
 	cords: LatLon;
 	name: string;
-	properties: Properties;
+	feature: Feature;
 }
 
 export interface LatLon {

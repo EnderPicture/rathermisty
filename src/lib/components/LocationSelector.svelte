@@ -3,6 +3,7 @@
 	import { fade, fly } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
 	import { sleep } from '$lib/helper';
+	import { weatherLocations } from '$lib/store';
 
 	let queryValue = '';
 
@@ -33,23 +34,34 @@
 			}
 		}
 	};
+
+	const click = (index) => {
+		let feature = features[index];
+		weatherLocations.update((d) => {
+			d.push({
+				cords: {
+					lat: feature.geometry.coordinates[0],
+					lon: feature.geometry.coordinates[1]
+				},
+				name: feature.properties.name,
+				feature: feature
+			});
+			return d;
+		});
+	};
+
+	$: console.log($weatherLocations);
 </script>
 
 <section class="search">
+	<div class="background"></div>
 	<h2>please enter in location</h2>
 	<form on:submit|preventDefault={() => searchLocation(queryValue)}>
-		<div>
-			<input
-				type="text"
-				name="query"
-				bind:value={queryValue}
-				placeholder="ex: vancouver"
-				size="1"
-			/>
-			<button>search</button>
-		</div>
+		<input type="text" name="query" bind:value={queryValue} placeholder="ex: vancouver" size="1" />
+		<button>search</button>
 	</form>
-	<div class="dropdown">
+
+	{#if features.length > 0}
 		<div class="items">
 			{#each features as feature, index (feature)}
 				<button
@@ -57,25 +69,22 @@
 					in:fly={{ y: -20, duration: 500 }}
 					out:fly={{ y: 20, duration: 500 }}
 					animate:flip={{ delay: 1000 }}
-					on:click={() => console.log('hi')}
+					on:click={() => click(index)}
 				>
-					<div class="con">
-						<div class="left">
-							<p class="title">{feature.properties.name || ''}</p>
-							<p>{feature.properties.state || ''} {feature.properties.country || ''}</p>
-						</div>
-						<p class="right">+</p>
+					<div class="left">
+						<p class="title">{feature.properties.name || ''}</p>
+						<p>{feature.properties.state || ''} {feature.properties.country || ''}</p>
 					</div>
+					<p class="right">+</p>
 				</button>
 			{/each}
 		</div>
-	</div>
+	{/if}
 </section>
 
 <style lang="scss">
 	.search {
-		background-image: linear-gradient(to bottom, var(--color-main-light), var(--color-main-dark));
-
+		position: relative;
 		> * {
 			padding-right: $side-padding;
 			padding-left: $side-padding;
@@ -85,12 +94,23 @@
 		}
 	}
 
+	.background {
+		background-image: linear-gradient(to bottom, var(--color-main-light), var(--color-main-dark));
+		position: absolute;
+		z-index: -1;
+		max-width: initial;
+		width: 100%;
+		height: calc(100vh - $nav-height);
+	}
+
+	h2 {
+		margin: 0;
+		padding: 1rem;
+	}
+
 	form {
-		> div {
-			background-color: var(--color-main-dark-1);
-			display: flex;
-			border-radius: 6px;
-		}
+		display: flex;
+		border-radius: 6px;
 		input {
 			flex: 1;
 			border-radius: 6px 0 0 6px;
@@ -103,9 +123,9 @@
 			border: none;
 			font-size: 1rem;
 			padding: 0.5rem 1rem;
-			background-color: var(--color-main-dark-2);
+			background-color: #fff1;
+
 			color: #fffe;
-			transform: translateY(-0.2rem);
 			&::placeholder {
 				color: #fff6;
 			}
@@ -115,53 +135,42 @@
 	.items {
 		display: grid;
 		grid-template-rows: repeat(15, minmax(2.5rem, auto));
-		gap: 0.5rem;
-		margin-top: 0.5rem;
+		margin-top: 1rem;
 	}
 	.item {
-		display: block;
-		border: none;
+		height: 100%;
 		width: 100%;
-		text-align: start;
+		padding: 0.1rem 1rem;
+		display: flex;
+		align-items: center;
+		border: none;
 		color: #fffe;
-		background-color: var(--color-main-dark-1);
-		padding: 0;
-		border-radius: 6px;
-		.con {
-			height: 100%;
-			width: 100%;
-			padding: 0.1rem 1rem;
-			background-color: var(--color-main-dark-2);
-			transition: transform 0.5s ease;
-			transform: translateY(-0.2rem);
-			border-radius: 6px;
+		background-color: #fff1;
+		&:first-child {
+			border-top-left-radius: 6px;
+			border-top-right-radius: 6px;
+		}
+		&:last-child {
+			border-bottom-left-radius: 6px;
+			border-bottom-right-radius: 6px;
+		}
+		.left {
+			flex: 1;
 			display: flex;
-			align-items: center;
-			.left {
-				flex: 1;
-				display: flex;
-				flex-direction: column;
-				justify-content: center;
-			}
-			.right {
-				font-size: 2rem;
-			}
-			p {
-				margin: 0;
-			}
+			flex-direction: column;
+			text-align: start;
+			justify-content: center;
+		}
+		.right {
+			font-size: 2rem;
+		}
+		p {
+			margin: 0;
 		}
 		&:hover {
 			cursor: pointer;
-			.con {
-				transition: transform 0.1s ease;
-				transform: translateY(-0.4rem);
-			}
 		}
 		&:active {
-			.con {
-				transition: transform 0.1s ease;
-				transform: translateY(-0rem);
-			}
 			cursor: pointer;
 		}
 	}
