@@ -4,6 +4,7 @@ export interface WeatherLocation {
 	cords: LatLon;
 	name: string;
 	feature: Feature;
+	id: number;
 }
 
 export interface LatLon {

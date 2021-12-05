@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Feature, PhotonResult } from '$lib/types/photon-api';
-	import { fade, fly } from 'svelte/transition';
+	import { crossfade, fade, fly } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
 	import { sleep } from '$lib/helper';
 	import { weatherLocations } from '$lib/store';
@@ -11,11 +11,6 @@
 	let lastQueryDone = true;
 
 	let result: PhotonResult | null = null;
-	let features: {
-		feature: Feature;
-		osmId: number;
-		id: string;
-	}[] = [];
 
 	const searchLocation = (query: string) => {
 		const trimmed = query.trim();
@@ -31,41 +26,19 @@
 		}
 	};
 
-	$: result && update(result);
 	$: ids = $weatherLocations.map((location) => location.feature.properties.osm_id);
-	$: computedSearchList = features.map((listItem) => {
-		return {
-			feature: listItem.feature,
-			osmId: listItem.osmId,
-			id: listItem.id,
-			added: ids.includes(listItem.feature.properties.osm_id)
-		};
-	});
-
-	$: console.log(computedSearchList);
-
-	const update = async (result: PhotonResult) => {
-		if (result !== null) {
-			for (let i = 0; i < result.features.length; i++) {
-				const feature = result.features[i];
-				features[i] = {
-					feature: feature,
-					osmId: feature.properties.osm_id,
-					id: feature.properties.osm_id + Date.now().toString()
-				};
-				await sleep(20);
-			}
-			while (features.length - result.features.length > 0) {
-				features.splice(result.features.length, 1);
-				features = features;
-				await sleep(20);
-			}
-		}
-	};
+	$: locationList =
+		result?.features.map((feature) => {
+			return {
+				feature: feature,
+				id: feature.properties.osm_id,
+				added: ids.includes(feature.properties.osm_id)
+			};
+		}) || [];
 
 	const addLoc = (id: number) => {
 		console.log(id);
-		let listItem = features[features.map((f) => f.osmId).indexOf(id)];
+		let listItem = locationList[locationList.map((f) => f.id).indexOf(id)];
 		let feature = listItem.feature;
 		weatherLocations.update((d) => {
 			d.push({
@@ -73,6 +46,7 @@
 					lat: feature.geometry.coordinates[0],
 					lon: feature.geometry.coordinates[1]
 				},
+				id: feature.properties.osm_id,
 				name: feature.properties.name,
 				feature: feature
 			});
@@ -80,7 +54,7 @@
 		});
 	};
 	const removeLocation = (id: number) => {
-		const index = $weatherLocations.map((l) => l.feature.properties.osm_id).indexOf(id);
+		const index = $weatherLocations.map((l) => l.id).indexOf(id);
 		weatherLocations.update((d) => {
 			d.splice(index, 1);
 			return d;
@@ -91,56 +65,53 @@
 <section class="search">
 	<div class="background" />
 
-	<h2>Favorate locations</h2>
-	{#if $weatherLocations.length > 0}
-		<div class="items">
-			{#each $weatherLocations as location, index (location)}
-				<button
-					class="item"
-					in:fly={{ y: -20, duration: 500 }}
-					out:fly={{ y: 20, duration: 500 }}
-					animate:flip={{ duration: 500 }}
-					on:click={() => removeLocation(index)}
-				>
-					<div class="left">
-						<p class="title">{location.feature.properties.name || ''}</p>
-						<p>
-							{location.feature.properties.state || ''}
-							{location.feature.properties.country || ''}
-						</p>
-					</div>
-					<p class="right">-</p>
-				</button>
-			{/each}
-		</div>
-	{:else}
-		<p>no favorate locations, add one below</p>
-	{/if}
-
 	<h2>Search a location</h2>
 	<form on:submit|preventDefault={() => searchLocation(queryValue)}>
 		<input type="text" name="query" bind:value={queryValue} placeholder="ex: vancouver" size="1" />
 		<button>search</button>
 	</form>
 
-	{#if features.length > 0}
-		<div class="items">
-			{#each computedSearchList as item, index (item.id)}
-				<button
-					class="item"
-					in:fly={{ y: -20, duration: 500 }}
-					out:fly={{ y: 20, duration: 500 }}
-					animate:flip={{ delay: 1000 }}
-					on:click={() => (item.added ? removeLocation(item.osmId) : addLoc(item.osmId))}
-				>
-					<div class="left">
-						<p class="title">{item.feature.properties.name || ''}</p>
-						<p>{item.feature.properties.state || ''} {item.feature.properties.country || ''}</p>
-					</div>
-					<p class="right" class:added={item.added}>+</p>
-				</button>
-			{/each}
-		</div>
+	<div class="items">
+		{#each locationList as item, index (item.id)}
+			<button
+				class="item"
+				in:fly={{ y: -20, duration: 500, delay: index * 20 }}
+				out:fly={{ y: 20, duration: 500, delay: index * 20 }}
+				animate:flip={{ duration: 500 }}
+				on:click={() => (item.added ? removeLocation(item.id) : addLoc(item.id))}
+			>
+				<div class="left">
+					<p class="title">{item.feature.properties.name || ''}</p>
+					<p>{item.feature.properties.state || ''} {item.feature.properties.country || ''}</p>
+				</div>
+				<p class="right" class:added={item.added}>+</p>
+			</button>
+		{/each}
+	</div>
+
+	<h2>Favorate locations</h2>
+	<div class="items">
+		{#each $weatherLocations as location, index (location)}
+			<button
+				class="item"
+				in:fly={{ y: -20, duration: 500 }}
+				out:fly={{ y: 20, duration: 500 }}
+				animate:flip={{ duration: 500 }}
+				on:click={() => removeLocation(location.id)}
+			>
+				<div class="left">
+					<p class="title">{location.feature.properties.name || ''}</p>
+					<p>
+						{location.feature.properties.state || ''}
+						{location.feature.properties.country || ''}
+					</p>
+				</div>
+				<p class="right">-</p>
+			</button>
+		{/each}
+	</div>
+	{#if $weatherLocations.length === 0}
+		<p transition:fade>no favorate locations, add one above</p>
 	{/if}
 </section>
 
@@ -198,7 +169,7 @@
 
 	.items {
 		display: grid;
-		grid-template-rows: minmax(2.5rem, auto);
+		grid-template-rows: auto;
 	}
 	.item {
 		height: 100%;
@@ -209,6 +180,7 @@
 		border: none;
 		color: #fffe;
 		background-color: #fff1;
+		position: relative;
 		&:hover {
 			cursor: pointer;
 			.left {
