@@ -4,27 +4,55 @@
 	import { flip } from 'svelte/animate';
 	import { sleep } from '$lib/helper';
 	import { weatherLocations } from '$lib/store';
+	import { listen, object_without_properties } from 'svelte/internal';
 
 	let queryValue = '';
+	let lastQueryValue = '';
+	let lastQueryDone = true;
 
 	let result: PhotonResult | null = null;
-	let features: Feature[] = [];
+	let features: {
+		feature: Feature;
+		osmId: number;
+		id: string;
+	}[] = [];
 
 	const searchLocation = (query: string) => {
 		const trimmed = query.trim();
-		if (trimmed != '') {
+		if (lastQueryDone && trimmed != '' && trimmed !== lastQueryValue) {
+			lastQueryDone = false;
+			lastQueryValue = trimmed;
 			fetch(`https://photon.komoot.io/api/?q=${trimmed}&osm_tag=place`)
 				.then((data) => data.json())
-				.then((json) => (result = json));
+				.then((json) => {
+					result = json;
+					lastQueryDone = true;
+				});
 		}
 	};
 
 	$: result && update(result);
+	$: ids = $weatherLocations.map((location) => location.feature.properties.osm_id);
+	$: computedSearchList = features.map((listItem) => {
+		return {
+			feature: listItem.feature,
+			osmId: listItem.osmId,
+			id: listItem.id,
+			added: ids.includes(listItem.feature.properties.osm_id)
+		};
+	});
+
+	$: console.log(computedSearchList);
 
 	const update = async (result: PhotonResult) => {
 		if (result !== null) {
 			for (let i = 0; i < result.features.length; i++) {
-				features[i] = result.features[i];
+				const feature = result.features[i];
+				features[i] = {
+					feature: feature,
+					osmId: feature.properties.osm_id,
+					id: feature.properties.osm_id + Date.now().toString()
+				};
 				await sleep(20);
 			}
 			while (features.length - result.features.length > 0) {
@@ -35,8 +63,10 @@
 		}
 	};
 
-	const addLoc = (index) => {
-		let feature = features[index];
+	const addLoc = (id: number) => {
+		console.log(id);
+		let listItem = features[features.map((f) => f.osmId).indexOf(id)];
+		let feature = listItem.feature;
 		weatherLocations.update((d) => {
 			d.push({
 				cords: {
@@ -49,21 +79,20 @@
 			return d;
 		});
 	};
-	const removeLocation = (index) => {
+	const removeLocation = (id: number) => {
+		const index = $weatherLocations.map((l) => l.feature.properties.osm_id).indexOf(id);
 		weatherLocations.update((d) => {
 			d.splice(index, 1);
 			return d;
 		});
 	};
-
-	$: console.log($weatherLocations);
 </script>
 
 <section class="search">
 	<div class="background" />
 
+	<h2>Favorate locations</h2>
 	{#if $weatherLocations.length > 0}
-		<h2>Favorate locations</h2>
 		<div class="items">
 			{#each $weatherLocations as location, index (location)}
 				<button
@@ -84,6 +113,8 @@
 				</button>
 			{/each}
 		</div>
+	{:else}
+		<p>no favorate locations, add one below</p>
 	{/if}
 
 	<h2>Search a location</h2>
@@ -94,19 +125,19 @@
 
 	{#if features.length > 0}
 		<div class="items">
-			{#each features as feature, index (feature)}
+			{#each computedSearchList as item, index (item.id)}
 				<button
 					class="item"
 					in:fly={{ y: -20, duration: 500 }}
 					out:fly={{ y: 20, duration: 500 }}
 					animate:flip={{ delay: 1000 }}
-					on:click={() => addLoc(index)}
+					on:click={() => (item.added ? removeLocation(item.osmId) : addLoc(item.osmId))}
 				>
 					<div class="left">
-						<p class="title">{feature.properties.name || ''}</p>
-						<p>{feature.properties.state || ''} {feature.properties.country || ''}</p>
+						<p class="title">{item.feature.properties.name || ''}</p>
+						<p>{item.feature.properties.state || ''} {item.feature.properties.country || ''}</p>
 					</div>
-					<p class="right">+</p>
+					<p class="right" class:added={item.added}>+</p>
 				</button>
 			{/each}
 		</div>
@@ -127,7 +158,7 @@
 
 	h2 {
 		margin-top: 0;
-		margin-bottom: .2rem;
+		margin-bottom: 0.2rem;
 		padding-top: 1rem;
 	}
 
@@ -143,7 +174,7 @@
 	form {
 		display: flex;
 		border-radius: 6px;
-		margin-bottom: .5rem;
+		margin-bottom: 0.5rem;
 		input {
 			flex: 1;
 			border-radius: 6px 0 0 6px;
@@ -207,6 +238,10 @@
 		}
 		.right {
 			font-size: 2rem;
+			transition: transform 0.5s ease;
+			&.added {
+				transform: rotate(45deg);
+			}
 		}
 		p {
 			margin: 0;
