@@ -26,12 +26,25 @@
 		position: fixed;
 		background-color: var(--color-main-light);
 		width: 100%;
+		margin-right: calc(100% - 100vw);
 		z-index: 100;
 		div {
 			max-width: $width;
 			margin: auto;
 			padding-left: $side-padding;
 			padding-right: $side-padding;
+			display: flex;
+			height: 100%;
+			align-items: center;
+
+			a {
+				color: #fffe;
+				text-decoration: none;
+			}
+
+			* + * {
+				margin-left: 1rem;
+			}
 		}
 	}
 

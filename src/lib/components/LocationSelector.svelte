@@ -1,10 +1,11 @@
 <script lang="ts">
 	import type { Feature, PhotonResult } from '$lib/types/photon-api';
-	import { crossfade, fade, fly } from 'svelte/transition';
+	import { crossfade, fade, fly, slide } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
 	import { sleep } from '$lib/helper';
 	import { weatherLocations } from '$lib/store';
 	import { listen, object_without_properties } from 'svelte/internal';
+	import { quintOut } from 'svelte/easing';
 
 	let queryValue = '';
 	let lastQueryValue = '';
@@ -23,9 +24,12 @@
 					result = json;
 					lastQueryDone = true;
 				});
+		} else if (trimmed == '') {
+			result = null;
 		}
 	};
 
+	$: console.log($weatherLocations);
 	$: ids = $weatherLocations.map((location) => location.feature.properties.osm_id);
 	$: locationList =
 		result?.features.map((feature) => {
@@ -63,8 +67,6 @@
 </script>
 
 <section class="search">
-	<div class="background" />
-
 	<h2>Search a location</h2>
 	<form on:submit|preventDefault={() => searchLocation(queryValue)}>
 		<input type="text" name="query" bind:value={queryValue} placeholder="ex: vancouver" size="1" />
@@ -75,9 +77,10 @@
 		{#each locationList as item, index (item.id)}
 			<button
 				class="item"
-				in:fly={{ y: -20, duration: 500, delay: index * 20 }}
-				out:fly={{ y: 20, duration: 500, delay: index * 20 }}
-				animate:flip={{ duration: 500 }}
+				class:added={item.added}
+				in:fly={{ y: -10, duration: 300, delay: index * 20 }}
+				out:fly={{ y: 10, duration: 300, delay: index * 20 }}
+				animate:flip={{ duration: 300 }}
 				on:click={() => (item.added ? removeLocation(item.id) : addLoc(item.id))}
 			>
 				<div class="left">
@@ -94,9 +97,9 @@
 		{#each $weatherLocations as location, index (location)}
 			<button
 				class="item"
-				in:fly={{ y: -20, duration: 500 }}
-				out:fly={{ y: 20, duration: 500 }}
-				animate:flip={{ duration: 500 }}
+				in:fly={{ y: -10, duration: 300 }}
+				out:fly={{ y: 10, duration: 300 }}
+				animate:flip={{ duration: 300 }}
 				on:click={() => removeLocation(location.id)}
 			>
 				<div class="left">
@@ -119,11 +122,7 @@
 	.search {
 		position: relative;
 		> * {
-			padding-right: $side-padding;
-			padding-left: $side-padding;
-			max-width: $width;
-			margin-left: auto;
-			margin-right: auto;
+			@include mid-width;
 		}
 	}
 
@@ -131,15 +130,6 @@
 		margin-top: 0;
 		margin-bottom: 0.2rem;
 		padding-top: 1rem;
-	}
-
-	.background {
-		background-image: linear-gradient(to bottom, var(--color-main-light), var(--color-main-dark));
-		position: absolute;
-		z-index: -1;
-		max-width: initial;
-		width: 100%;
-		height: calc(100vh - $nav-height);
 	}
 
 	form {
@@ -181,6 +171,7 @@
 		color: #fffe;
 		background-color: #fff1;
 		position: relative;
+		transition: opacity 0.2s ease, box-shadow 0.5s ease;
 		&:hover {
 			cursor: pointer;
 			.left {
@@ -189,6 +180,7 @@
 			}
 		}
 		&:active {
+			transition: opacity 0.2s ease, box-shadow 0.1s ease;
 			cursor: pointer;
 		}
 		&:first-child {
@@ -198,6 +190,9 @@
 		&:last-child {
 			border-bottom-left-radius: 6px;
 			border-bottom-right-radius: 6px;
+		}
+		&.added {
+			opacity: 0.5;
 		}
 		.left {
 			flex: 1;
@@ -210,8 +205,9 @@
 		}
 		.right {
 			font-size: 2rem;
-			transition: transform 0.5s ease;
+			transition: transform 0.2s ease, opacity 0.2s ease;
 			&.added {
+				opacity: 0.5;
 				transform: rotate(45deg);
 			}
 		}
