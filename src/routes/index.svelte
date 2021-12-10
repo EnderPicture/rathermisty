@@ -1,12 +1,12 @@
 <script lang="ts">
-	import LocationSelector from '$lib/components/LocationSelector.svelte';
+	import LocationList from '$lib/components/LocationList.svelte';
+	import LocationSelector from '$lib/components/LocationSearch.svelte';
 </script>
 
 <div class="background" />
 
 <header>
 	<div class="title">
-		
 		<h1>RatherMisty</h1>
 		<img src="/imgs/logo.svg" alt="" />
 	</div>
@@ -14,6 +14,7 @@
 </header>
 
 <LocationSelector />
+<LocationList />
 
 <style lang="scss">
 	header {
@@ -28,7 +29,7 @@
 			margin: 0;
 		}
 		img {
-			margin-left: .5rem;
+			margin-left: 0.5rem;
 			height: 4rem;
 		}
 	}

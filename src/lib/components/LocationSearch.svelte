@@ -1,11 +1,8 @@
 <script lang="ts">
-	import type { Feature, PhotonResult } from '$lib/types/photon-api';
-	import { crossfade, fade, fly, slide } from 'svelte/transition';
+	import type { PhotonResult } from '$lib/types/photon-api';
+	import { fly } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
-	import { sleep } from '$lib/helper';
 	import { weatherLocations } from '$lib/store';
-	import { listen, object_without_properties } from 'svelte/internal';
-	import { quintOut } from 'svelte/easing';
 
 	let queryValue = '';
 	let lastQueryValue = '';
@@ -91,39 +88,12 @@
 			</button>
 		{/each}
 	</div>
-
-	<h2>Favorate locations</h2>
-	<div class="items">
-		{#each $weatherLocations as location, index (location)}
-			<button
-				class="item"
-				in:fly={{ y: -10, duration: 300 }}
-				out:fly={{ y: 10, duration: 300 }}
-				animate:flip={{ duration: 300 }}
-				on:click={() => removeLocation(location.id)}
-			>
-				<div class="left">
-					<p class="title">{location.feature.properties.name || ''}</p>
-					<p>
-						{location.feature.properties.state || ''}
-						{location.feature.properties.country || ''}
-					</p>
-				</div>
-				<p class="right">-</p>
-			</button>
-		{/each}
-	</div>
-	{#if $weatherLocations.length === 0}
-		<p transition:fade>no favorate locations, add one above</p>
-	{/if}
 </section>
 
 <style lang="scss">
 	.search {
 		position: relative;
-		> * {
-			@include mid-width;
-		}
+		@include mid-width;
 	}
 
 	h2 {
