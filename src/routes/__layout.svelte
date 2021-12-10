@@ -1,10 +1,13 @@
 <nav>
 	<div>
 		<a href="/">locations</a>
+		<a href="/weather">weather</a>
 		<a href="/about">about</a>
 	</div>
 </nav>
+
 <main>
+	<div class="background" />
 	<slot />
 </main>
 <footer>
@@ -46,6 +49,15 @@
 				margin-left: 1rem;
 			}
 		}
+	}
+
+	.background {
+		background-image: linear-gradient(to bottom, var(--color-main-light), var(--color-main-dark));
+		position: absolute;
+		z-index: -1;
+		max-width: initial;
+		width: 100%;
+		height: calc(100vh - $nav-height);
 	}
 
 	main {

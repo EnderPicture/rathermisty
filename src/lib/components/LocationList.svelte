@@ -40,9 +40,14 @@
 </section>
 
 <style lang="scss">
-  .loc-list {
-    @include mid-width;
-  }
+	.loc-list {
+		@include mid-width;
+	}
+	h2 {
+		margin-top: 0;
+		margin-bottom: 0.2rem;
+		padding-top: 1rem;
+	}
 	.items {
 		display: grid;
 		grid-template-rows: auto;

@@ -3,8 +3,6 @@
 	import LocationSelector from '$lib/components/LocationSearch.svelte';
 </script>
 
-<div class="background" />
-
 <header>
 	<div class="title">
 		<h1>RatherMisty</h1>
@@ -36,13 +34,5 @@
 	h2 {
 		margin: 0;
 		font-weight: normal;
-	}
-	.background {
-		background-image: linear-gradient(to bottom, var(--color-main-light), var(--color-main-dark));
-		position: absolute;
-		z-index: -1;
-		max-width: initial;
-		width: 100%;
-		height: calc(100vh - $nav-height);
 	}
 </style>
