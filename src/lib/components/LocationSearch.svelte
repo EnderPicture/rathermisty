@@ -27,6 +27,12 @@
 		}
 	};
 
+	const clear = () => {
+		result = null;
+		lastQueryValue = '';
+		queryValue = '';
+	};
+
 	$: ids = $weatherLocations.map((location) => location.feature.properties.osm_id);
 	$: locationList =
 		result?.features.map((feature) => {
@@ -71,12 +77,24 @@
 	</form>
 
 	<div class="items">
+		{#if locationList.length > 0}
+			<button
+				class="item clear"
+				in:fly={{ y: -10, duration: 300, delay: 20 }}
+				out:fly={{ y: 10, duration: 300, delay: 20 }}
+				on:click={clear}
+			>
+				<div class="left">
+					<p class="title">clear results</p>
+				</div>
+			</button>
+		{/if}
 		{#each locationList as item, index (item.id)}
 			<button
 				class="item"
 				class:added={item.added}
-				in:fly={{ y: -10, duration: 300, delay: index * 20 }}
-				out:fly={{ y: 10, duration: 300, delay: index * 20 }}
+				in:fly={{ y: -10, duration: 300, delay: (index + 1) * 20 }}
+				out:fly={{ y: 10, duration: 300, delay: (index + 1) * 20 }}
 				animate:flip={{ duration: 300 }}
 				on:click={() => (item.added ? removeLocation(item.id) : addLoc(item.id))}
 			>
@@ -142,6 +160,10 @@
 		background-color: #fff1;
 		position: relative;
 		transition: opacity 0.2s ease, box-shadow 0.5s ease;
+
+		&.clear {
+			padding: 0.5rem 1rem;
+		}
 		&:hover {
 			cursor: pointer;
 			.left {
