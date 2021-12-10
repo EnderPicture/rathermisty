@@ -4,13 +4,37 @@
 
 <div class="background" />
 
-<p>A weather app that gives you all the data in a pleasing way</p>
+<header>
+	<div class="title">
+		
+		<h1>RatherMisty</h1>
+		<img src="/imgs/logo.svg" alt="" />
+	</div>
+	<h2>a no frills weather app</h2>
+</header>
 
 <LocationSelector />
 
 <style lang="scss">
-	* {
+	header {
 		@include mid-width;
+	}
+	.title {
+		margin-top: 5rem;
+		display: flex;
+		align-items: center;
+		h1 {
+			font-size: 2.5rem;
+			margin: 0;
+		}
+		img {
+			margin-left: .5rem;
+			height: 4rem;
+		}
+	}
+	h2 {
+		margin: 0;
+		font-weight: normal;
 	}
 	.background {
 		background-image: linear-gradient(to bottom, var(--color-main-light), var(--color-main-dark));

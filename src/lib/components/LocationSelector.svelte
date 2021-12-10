@@ -26,10 +26,10 @@
 				});
 		} else if (trimmed == '') {
 			result = null;
+			lastQueryValue = trimmed;
 		}
 	};
 
-	$: console.log($weatherLocations);
 	$: ids = $weatherLocations.map((location) => location.feature.properties.osm_id);
 	$: locationList =
 		result?.features.map((feature) => {
@@ -67,7 +67,7 @@
 </script>
 
 <section class="search">
-	<h2>Search a location</h2>
+	<h2>Add a location</h2>
 	<form on:submit|preventDefault={() => searchLocation(queryValue)}>
 		<input type="text" name="query" bind:value={queryValue} placeholder="ex: vancouver" size="1" />
 		<button>search</button>
