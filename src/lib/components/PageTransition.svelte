@@ -16,7 +16,7 @@
 	}
 </script>
 
-<main transition:flyIn={{ duration: 100 }}>
+<main transition:flyIn={{ duration: 150 }}>
 	<slot />
 </main>
 
