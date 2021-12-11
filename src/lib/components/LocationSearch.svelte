@@ -55,7 +55,8 @@
 				},
 				id: feature.properties.osm_id,
 				name: feature.properties.name,
-				feature: feature
+				feature: feature,
+				lastFetch: 0
 			});
 			return d;
 		});
