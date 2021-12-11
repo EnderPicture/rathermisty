@@ -12,7 +12,6 @@
 	const fetchWeatherData = (index: number) => {
 		const location = $weatherLocations[index];
 		const now = Date.now();
-		console.log(location.lastFetch);
 		if (location.lastFetch + 60 * 60 * 1000 < now) {
 			const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 			const lat = location.cords.lat;
