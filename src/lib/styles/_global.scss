@@ -1,15 +1,5 @@
-$width: 30rem;
-$side-padding: 1rem;
+@import './variables';
 
-$nav-height: 2rem;
-
-$blue-dark: #3069c2;
-$blue-light: #5f8ace;
-
-@mixin mid-width {
-	padding-right: $side-padding;
-	padding-left: $side-padding;
-	max-width: $width;
-	margin-left: auto;
-	margin-right: auto;
+.mid-width {
+	@include mid-width;
 }

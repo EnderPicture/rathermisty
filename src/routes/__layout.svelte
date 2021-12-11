@@ -1,3 +1,7 @@
+<script lang="ts">
+	import '$lib/styles/_global.scss';
+</script>
+
 <nav>
 	<div>
 		<a href="/">locations</a>
@@ -10,7 +14,8 @@
 	<div class="background" />
 	<slot />
 </main>
-<footer>
+
+<footer class="mid-width">
 	<p>By Donny Wu</p>
 </footer>
 
