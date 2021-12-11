@@ -13,7 +13,7 @@
 			{#each windSpeeds as windSpeed}
 				<div
 					class="clouds-bg animated"
-					style={`--percent: ${percent}%; --speed: ${(1 / windSpeed) * 100}s`}
+					style={`--percent: ${percent}%; --speed: ${(1 / windSpeed) * 150}s`}
 				/>
 			{/each}
 		</div>
@@ -34,12 +34,12 @@
 		left: 0;
 		height: 100%;
 		width: 100%;
-    opacity: .2;
-    filter: blur(5px);
+		opacity: 0.2;
+		filter: blur(5px);
 	}
 	.cloud-bg-list {
 		display: grid;
-    overflow: hidden;
+		overflow: hidden;
 	}
 	.clouds-bg {
 		background-repeat: repeat;

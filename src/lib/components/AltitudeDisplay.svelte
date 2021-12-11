@@ -25,7 +25,6 @@
 		windSpeed={thisHour.values.windspeed_180m}
 		windSpeedUnit={thisHour.units.windspeed_180m}
 		windDirection={thisHour.values.winddirection_180m}
-		windDirectionUnit={thisHour.units.winddirection_180m}
 	/>
 	<CloudCoverage
 		className="row-span-4"
@@ -43,21 +42,18 @@
 		windSpeed={thisHour.values.windspeed_120m}
 		windSpeedUnit={thisHour.units.windspeed_120m}
 		windDirection={thisHour.values.winddirection_120m}
-		windDirectionUnit={thisHour.units.winddirection_120m}
 	/>
 	<p class="altitude">80<sub class="unit">m</sub></p>
 	<WindDisplay
 		windSpeed={thisHour.values.windspeed_80m}
 		windSpeedUnit={thisHour.units.windspeed_80m}
 		windDirection={thisHour.values.winddirection_80m}
-		windDirectionUnit={thisHour.units.winddirection_80m}
 	/>
 	<p class="altitude">10<sub class="unit">m</sub></p>
 	<WindDisplay
 		windSpeed={thisHour.values.windspeed_10m}
 		windSpeedUnit={thisHour.units.windspeed_10m}
 		windDirection={thisHour.values.winddirection_10m}
-		windDirectionUnit={thisHour.units.winddirection_10m}
 	/>
 	<div />
 	<p class="wind-speed">

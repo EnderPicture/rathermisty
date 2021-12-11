@@ -2,7 +2,6 @@
 	export let windSpeed: number;
 	export let windSpeedUnit: string;
 	export let windDirection: number;
-	export let windDirectionUnit: string;
 </script>
 
 <template>
@@ -48,12 +47,6 @@
 		img {
 			width: 0.5rem;
 			height: 1rem;
-		}
-
-		sup {
-			font-size: 0.6em;
-			vertical-align: super;
-			opacity: 0.5;
 		}
 	}
 </style>
