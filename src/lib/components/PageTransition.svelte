@@ -1,9 +1,22 @@
 <script lang="ts">
-	import { fade } from 'svelte/transition';
 	import { cubicInOut } from 'svelte/easing';
+
+	function flyIn(node: HTMLElement, { duration }: { duration: number }) {
+		return {
+			duration,
+			css: (t: number) => {
+				const eased = cubicInOut(t);
+
+				return `
+          opacity: ${eased};
+					transform: translateY(${(1 - eased) * -5}px);
+					`;
+			}
+		};
+	}
 </script>
 
-<main transition:fade={{ duration: 50 }}>
+<main transition:flyIn={{ duration: 100 }}>
 	<slot />
 </main>
 

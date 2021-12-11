@@ -20,8 +20,6 @@
 </footer>
 
 <style lang="scss">
-	@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
 	.stacking-slot {
 		display: grid;
 	}
@@ -37,7 +35,7 @@
 		height: $nav-height;
 		position: fixed;
 		background-color: var(--color-main-light);
-		width: calc(100% + 100vw - 100% );
+		width: calc(100% + 100vw - 100%);
 		z-index: 100;
 		display: flex;
 		justify-content: center;
@@ -48,7 +46,7 @@
 			padding-right: $side-padding;
 			display: flex;
 			height: 100%;
-			
+
 			align-items: center;
 
 			a {
@@ -71,5 +69,4 @@
 		width: 100%;
 		height: calc(100vh - $nav-height);
 	}
-
 </style>
