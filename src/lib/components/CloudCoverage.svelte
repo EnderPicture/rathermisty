@@ -43,6 +43,7 @@
 	}
 	.clouds-bg {
 		background-repeat: repeat;
+		background-position: 25% 50%;
 		background-size: calc(100% / 3) 100%;
 		background-image: linear-gradient(
 			to right,
@@ -53,6 +54,7 @@
 		);
 	}
 	.animated {
+		background-position: 10% 50%;
 		background-size: calc(100% / 6) 100%;
 		width: 200%;
 		animation-name: scroll;
