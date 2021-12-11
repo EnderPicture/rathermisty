@@ -17,11 +17,13 @@
 				console.log(data);
 			});
 	};
+
+	// fetchWeatherData();
 </script>
 
 <PageTransition>
 	<section class="mid-width">
-		<p>hi</p>
+		<p>weather</p>
 	</section>
 </PageTransition>
 

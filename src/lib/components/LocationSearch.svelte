@@ -50,8 +50,8 @@
 		weatherLocations.update((d) => {
 			d.push({
 				cords: {
-					lat: feature.geometry.coordinates[0],
-					lon: feature.geometry.coordinates[1]
+					lat: feature.geometry.coordinates[1],
+					lon: feature.geometry.coordinates[0]
 				},
 				id: feature.properties.osm_id,
 				name: feature.properties.name,

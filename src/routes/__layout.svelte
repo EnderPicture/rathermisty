@@ -17,6 +17,10 @@
 
 <footer class="mid-width">
 	<p>By Donny Wu</p>
+	<p>
+		Weather data by
+		<a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer"> Open-Meteo.com </a>
+	</p>
 </footer>
 
 <style lang="scss">
@@ -68,5 +72,25 @@
 		max-width: initial;
 		width: 100%;
 		height: calc(100vh - $nav-height);
+	}
+
+	footer > p {
+		max-width: 25rem;
+		color: white;
+		opacity: 0.8;
+
+		a {
+			color: inherit;
+			transition: opacity 0.5s ease;
+			will-change: opacity;
+			&:hover {
+				transition: opacity 0.1s ease;
+				opacity: 0.5;
+			}
+			&:active {
+				transition: opacity 0.1s ease;
+				opacity: 0.4;
+			}
+		}
 	}
 </style>
