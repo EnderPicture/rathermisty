@@ -80,8 +80,8 @@
 		{#if locationList.length > 0}
 			<button
 				class="item clear"
-				in:fly={{ y: -10, duration: 300, delay: 20 }}
-				out:fly={{ y: 10, duration: 300, delay: 20 }}
+				in:fly|local={{ y: -10, duration: 300 }}
+				out:fly|local={{ y: 10, duration: 300 }}
 				on:click={clear}
 			>
 				<div class="left">
@@ -93,8 +93,8 @@
 			<button
 				class="item"
 				class:added={item.added}
-				in:fly={{ y: -10, duration: 300, delay: (index + 1) * 20 }}
-				out:fly={{ y: 10, duration: 300, delay: (index + 1) * 20 }}
+				in:fly|local={{ y: -10, duration: 300, delay: (index + 1) * 20 }}
+				out:fly|local={{ y: 10, duration: 300, delay: (index + 1) * 20 }}
 				animate:flip={{ duration: 300 }}
 				on:click={() => (item.added ? removeLocation(item.id) : addLoc(item.id))}
 			>

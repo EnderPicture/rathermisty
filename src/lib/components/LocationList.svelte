@@ -18,8 +18,8 @@
 		{#each $weatherLocations as location, index (location)}
 			<button
 				class="item"
-				in:fly={{ y: -10, duration: 300 }}
-				out:fly={{ y: 10, duration: 300 }}
+				in:fly|local={{ y: -10, duration: 300 }}
+				out:fly|local={{ y: 10, duration: 300 }}
 				animate:flip={{ duration: 300 }}
 				on:click={() => removeLocation(location.id)}
 			>

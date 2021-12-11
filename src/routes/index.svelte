@@ -1,18 +1,21 @@
 <script lang="ts">
 	import LocationList from '$lib/components/LocationList.svelte';
 	import LocationSelector from '$lib/components/LocationSearch.svelte';
+	import PageTransition from '$lib/components/PageTransition.svelte';
 </script>
 
-<header>
-	<div class="title">
-		<h1>RatherMisty</h1>
-		<img src="/imgs/logo.svg" alt="" />
-	</div>
-	<h2>a no frills weather app</h2>
-</header>
+<PageTransition>
+	<header>
+		<div class="title">
+			<h1>RatherMisty</h1>
+			<img src="/imgs/logo.svg" alt="" />
+		</div>
+		<h2>a no frills weather app</h2>
+	</header>
 
-<LocationSelector />
-<LocationList />
+	<LocationSelector />
+	<LocationList />
+</PageTransition>
 
 <style lang="scss">
 	header {

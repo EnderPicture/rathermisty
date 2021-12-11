@@ -1,11 +1,15 @@
-<section>
-  <p>about</p>
+<script>
+	import PageTransition from '$lib/components/PageTransition.svelte';
+</script>
 
-</section>
-
+<PageTransition>
+	<section>
+		<p>about</p>
+	</section>
+</PageTransition>
 
 <style lang="scss">
-  section {
-    @include mid-width;
-  }
+	section {
+		@include mid-width;
+	}
 </style>

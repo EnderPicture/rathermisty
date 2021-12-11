@@ -2,7 +2,6 @@ import { writable } from 'svelte/store';
 import type { WeatherLocation } from '$lib/types/types';
 import { browser } from '$app/env';
 
-
 export const weatherLocations = writable<WeatherLocation[]>([]);
 
 if (browser) {

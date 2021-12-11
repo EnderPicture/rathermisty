@@ -10,10 +10,10 @@
 	</div>
 </nav>
 
-<main>
-	<div class="background" />
+<div class="background" />
+<div class="stacking-slot">
 	<slot />
-</main>
+</div>
 
 <footer class="mid-width">
 	<p>By Donny Wu</p>
@@ -21,6 +21,10 @@
 
 <style lang="scss">
 	@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+	.stacking-slot {
+		display: grid;
+	}
 
 	footer {
 		max-width: $width;
@@ -33,16 +37,18 @@
 		height: $nav-height;
 		position: fixed;
 		background-color: var(--color-main-light);
-		width: 100%;
-		margin-right: calc(100% - 100vw);
+		width: calc(100% + 100vw - 100% );
 		z-index: 100;
+		display: flex;
+		justify-content: center;
 		div {
+			width: 100%;
 			max-width: $width;
-			margin: auto;
 			padding-left: $side-padding;
 			padding-right: $side-padding;
 			display: flex;
 			height: 100%;
+			
 			align-items: center;
 
 			a {
@@ -59,47 +65,11 @@
 	.background {
 		background-image: linear-gradient(to bottom, var(--color-main-light), var(--color-main-dark));
 		position: absolute;
+		top: $nav-height;
 		z-index: -1;
 		max-width: initial;
 		width: 100%;
 		height: calc(100vh - $nav-height);
 	}
 
-	main {
-		padding-top: $nav-height;
-	}
-
-	:global(body) {
-		--color-main-light: #{$blue-light};
-
-		--color-main-dark-4: #{lighten($blue-dark, 14)};
-		--color-main-dark-3: #{lighten($blue-dark, 11)};
-		--color-main-dark-2: #{lighten($blue-dark, 8)};
-		--color-main-dark-1: #{lighten($blue-dark, 5)};
-		--color-main-dark: #{$blue-dark};
-
-		margin: 0;
-		font-family: 'Montserrat', sans-serif;
-
-		margin-right: calc(100% - 100vw);
-		overflow-x: hidden;
-
-		background-color: $blue-dark;
-		color: #fffe;
-	}
-
-	:global(:where(button, input, a)) {
-		box-shadow: 0 0 0 0px #fff0;
-		transition: box-shadow 0.5s ease;
-		&:focus {
-			z-index: 10;
-			transition: box-shadow 0.1s ease;
-			box-shadow: 0 0 0 2px #ffff;
-			outline: none;
-		}
-	}
-
-	:global(*) {
-		box-sizing: border-box;
-	}
 </style>

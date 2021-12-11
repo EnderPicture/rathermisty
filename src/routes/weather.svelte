@@ -1,4 +1,5 @@
 <script lang="ts">
+	import PageTransition from '$lib/components/PageTransition.svelte';
 	import { weatherLocations } from '$lib/store';
 	import type { RawWeatherData } from '$lib/types/weather';
 
@@ -18,9 +19,11 @@
 	};
 </script>
 
-<section class="mid-width">
-	<p>hi</p>
-</section>
+<PageTransition>
+	<section class="mid-width">
+		<p>hi</p>
+	</section>
+</PageTransition>
 
 <style lang="scss">
 </style>
