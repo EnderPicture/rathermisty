@@ -62,11 +62,15 @@
 		animation-duration: var(--speed);
 	}
 	p {
-		margin: 0.25rem;
+		margin: 0;
+		padding: 0.25rem;
 		font-size: 1.2rem;
 		font-weight: 800;
 		opacity: 0.9;
-		text-align: center;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 	sub {
 		font-size: 0.6em;
