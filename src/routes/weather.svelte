@@ -1,6 +1,7 @@
 <script lang="ts">
 	import AltitudeDisplay from '$lib/components/AltitudeDisplay.svelte';
 	import PageTransition from '$lib/components/PageTransition.svelte';
+	import WeatherTimeLine from '$lib/components/WeatherTimeLine.svelte';
 	import { crunchWeatherData } from '$lib/data-crunch';
 	import { weatherCodeMap } from '$lib/helper';
 	import { weatherLocations } from '$lib/store';
@@ -58,6 +59,7 @@
 			</p>
 		</section>
 		<AltitudeDisplay {thisHour} />
+		<WeatherTimeLine {weatherData} days={weatherData.days} />
 	{/if}
 </PageTransition>
 
