@@ -102,7 +102,7 @@
 		display: grid;
 		grid-auto-flow: column;
 		grid-auto-columns: min-content;
-		padding: 1rem 5rem;
+		padding: 3rem 5rem 1rem 5rem;
 		width: max-content;
 	}
 	.day {

@@ -24,7 +24,10 @@
 	};
 </script>
 
-<div class="hour">
+<div class="hour" class:now={hour.tense === 'now'}>
+	{#if hour.tense === 'now'}
+		<div class="now-tag" />
+	{/if}
 	<p>{hour.date.toLocaleString('en-us', timeOptions).toLowerCase()}</p>
 	<div />
 	<p class="weather">
@@ -59,12 +62,25 @@
 </div>
 
 <style lang="scss">
+	.now-tag {
+		position: absolute;
+		bottom: 100%;
+		left: 50%;
+		transform: translate(-50%, 0.25rem) scale(0.5, 1);
+
+		border: solid 0.75rem #fff0;
+		border-top: solid 0.75rem #fffc;
+	}
 	p {
 		white-space: nowrap;
 	}
 	.hour {
+		position: relative;
 		display: grid;
 		grid-template-rows: 1fr auto auto;
+		&.now {
+			font-weight: 900;
+		}
 	}
 	.weather {
 		margin-top: 0.5rem;
@@ -73,7 +89,7 @@
 		writing-mode: vertical-rl;
 		text-orientation: mixed;
 		margin: 0;
-		color: #ffffffcc;
+		color: #fffc;
 	}
 	.graph {
 		height: 8rem;
