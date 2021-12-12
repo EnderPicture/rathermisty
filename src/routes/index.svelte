@@ -27,15 +27,26 @@
 		align-items: center;
 		h1 {
 			font-size: 2.5rem;
+			font-weight: 900;
 			margin: 0;
 		}
 		img {
 			margin-left: 0.5rem;
 			height: 4rem;
 		}
+		@media screen and (max-width : 375px)  {
+			h1 {
+				font-size: 2rem;
+			}
+			img {
+				height: 3rem;
+			}
+		}
 	}
 	h2 {
+		font-size: 1rem;
 		margin: 0;
+		margin-top: -.5rem;
 		font-weight: normal;
 	}
 </style>
