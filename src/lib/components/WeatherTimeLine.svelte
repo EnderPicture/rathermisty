@@ -21,8 +21,12 @@
 
 <div class="timeline">
 	<div class="track">
-		<div class="day-marker" on:click={() => (showPast = !showPast)}>
-			{showPast ? 'Hide' : 'View'} past history
+		<div>
+			<button class="day-marker" on:click={() => (showPast = !showPast)}>
+				<p>
+					{showPast ? 'Hide' : 'View'} past history
+				</p>
+			</button>
 		</div>
 		{#if showPast}
 			{#each past as day, index}
@@ -58,8 +62,12 @@
 				</article>
 			{/each}
 		{/if}
-		<div class="day-marker" on:click={() => (showFuture = !showFuture)}>
-			{showFuture ? 'Hide' : 'View'} future forcasts
+		<div>
+			<button class="day-marker" on:click={() => (showFuture = !showFuture)}>
+				<p>
+					{showFuture ? 'Hide' : 'View'} future forcasts
+				</p>
+			</button>
 		</div>
 	</div>
 </div>
@@ -119,6 +127,15 @@
 		z-index: 10;
 		font-weight: 800;
 		height: fit-content;
+		color: #fffe;
+		background: none;
+		border: none;
+
+		p {
+			writing-mode: vertical-rl;
+			text-orientation: mixed;
+			margin: 0;
+		}
 		&::before {
 			content: '';
 			position: absolute;
@@ -129,6 +146,12 @@
 			background-color: var(--color-main-dark);
 			z-index: -1;
 			filter: blur(5px);
+		}
+	}
+
+	button {
+		&:hover {
+			cursor: pointer;
 		}
 	}
 </style>
