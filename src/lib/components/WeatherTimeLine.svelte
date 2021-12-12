@@ -21,6 +21,9 @@
 
 <div class="timeline">
 	<div class="track">
+		<div class="day-marker" on:click={() => (showPast = !showPast)}>
+			{showPast ? 'Hide' : 'View'} past history
+		</div>
 		{#if showPast}
 			{#each past as day, index}
 				<article class="day">
@@ -55,6 +58,9 @@
 				</article>
 			{/each}
 		{/if}
+		<div class="day-marker" on:click={() => (showFuture = !showFuture)}>
+			{showFuture ? 'Hide' : 'View'} future forcasts
+		</div>
 	</div>
 </div>
 

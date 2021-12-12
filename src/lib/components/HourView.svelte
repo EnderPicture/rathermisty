@@ -66,6 +66,9 @@
 		display: grid;
 		grid-template-rows: 1fr auto auto;
 	}
+	.weather {
+		margin-top: 0.5rem;
+	}
 	p {
 		writing-mode: vertical-rl;
 		text-orientation: mixed;
