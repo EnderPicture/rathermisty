@@ -24,28 +24,22 @@
 	};
 </script>
 
-<div class="hour" v-if="hour.tense !== 'past'">
+<div class="hour">
 	<p>{hour.date.toLocaleString('en-us', timeOptions).toLowerCase()}</p>
 	<div />
 	<p class="weather">
 		{weatherCodeMap.get(hour.values.weathercode)}
 	</p>
 	<div class="cloud-graph">
-		<div
-			v-if="hour.values.cloudcover_high > 0"
-			class="cloud high"
-			style={`--cloud-height: ${hour.values.cloudcover_high}%`}
-		/>
-		<div
-			v-if="hour.values.cloudcover_mid > 0"
-			class="cloud mid"
-			style={`--cloud-height: ${hour.values.cloudcover_mid}%`}
-		/>
-		<div
-			v-if="hour.values.cloudcover_low > 0"
-			class="cloud low"
-			style={`--cloud-height: ${hour.values.cloudcover_low}%`}
-		/>
+		{#if hour.values.cloudcover_high > 0}
+			<div class="cloud high" style={`--cloud-height: ${hour.values.cloudcover_high}%`} />
+		{/if}
+		{#if hour.values.cloudcover_mid > 0}
+			<div class="cloud mid" style={`--cloud-height: ${hour.values.cloudcover_mid}%`} />
+		{/if}
+		{#if hour.values.cloudcover_low > 0}
+			<div class="cloud low" style={`--cloud-height: ${hour.values.cloudcover_low}%`} />
+		{/if}
 	</div>
 	<div class="graph">
 		<p class="temperature" style={`bottom: ${apparentTempPercent}%`}>
@@ -58,7 +52,7 @@
 			alt=""
 			style={`
       transform: rotate(${hour.values.winddirection_10m}deg);
-      bottom: ${hour.values.windspeed_10m}%;
+      bottom: ${hour.values.windgusts_10m}%;
     `}
 		/>
 	</div>
