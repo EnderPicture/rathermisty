@@ -34,7 +34,8 @@
 		}
 	};
 
-	$: if ($weatherLocations[selected]) fetchWeatherData(selected);
+	$: location = $weatherLocations[selected];
+	$: if (location) fetchWeatherData(selected);
 
 	$: weatherData = rawWeatherData ? crunchWeatherData(rawWeatherData) : null;
 
@@ -46,7 +47,7 @@
 	{#if thisHour}
 		<section class="mid-width">
 			<p class="intro-text">
-				Currently, it's actually {thisHour.values.temperature_2m}{thisHour.units.temperature_2m}
+				Currently, it's actually {thisHour.values.temperature_2m}{thisHour.units.temperature_2m} in {location.name}
 			</p>
 			<p class="intro-text">but feels like</p>
 			<p class="temp">
