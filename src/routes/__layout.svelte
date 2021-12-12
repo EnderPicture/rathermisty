@@ -18,8 +18,8 @@
 <footer class="mid-width">
 	<p>By Donny Wu</p>
 	<p>
-		Weather data by
-		<a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer"> Open-Meteo.com </a>
+		Weather data from
+		<a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer"> Open-Meteo </a>
 	</p>
 </footer>
 

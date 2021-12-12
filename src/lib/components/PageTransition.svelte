@@ -1,22 +1,35 @@
 <script lang="ts">
-	import { cubicInOut } from 'svelte/easing';
+	import { cubicIn, cubicOut } from 'svelte/easing';
 
+	function flyOut(node: HTMLElement, { duration }: { duration: number }) {
+		return {
+			duration,
+			css: (t: number) => {
+				const eased = cubicIn(t);
+
+				return `
+          opacity: ${eased};
+					transform: translateY(${(1 - eased) * 15}px);
+					`;
+			}
+		};
+	}
 	function flyIn(node: HTMLElement, { duration }: { duration: number }) {
 		return {
 			duration,
 			css: (t: number) => {
-				const eased = cubicInOut(t);
+				const eased = cubicOut(t);
 
 				return `
           opacity: ${eased};
-					transform: translateY(${(1 - eased) * -5}px);
+					transform: translateY(${(1 - eased) * -15}px);
 					`;
 			}
 		};
 	}
 </script>
 
-<main transition:flyIn={{ duration: 150 }}>
+<main in:flyIn={{ duration: 150 }} out:flyOut={{ duration: 150 }}>
 	<slot />
 </main>
 
