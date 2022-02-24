@@ -12,3 +12,5 @@ if (browser) {
 		localStorage.setItem('weatherLocations', JSON.stringify(value));
 	});
 }
+
+export const selectedLocation = writable<number>(-1);

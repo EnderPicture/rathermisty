@@ -6,8 +6,8 @@
 	import { weatherCodeMap } from '$lib/helper';
 	import { weatherLocations } from '$lib/store';
 	import type { RawWeatherData, WeatherData } from '$lib/types/weather';
+	import { selectedLocation } from '$lib/store';
 
-	let selected = 0;
 	let rawWeatherData: RawWeatherData | null = null;
 
 	const fetchWeatherData = (index: number) => {
@@ -38,8 +38,11 @@
 		}
 	};
 
-	$: location = $weatherLocations[selected];
-	$: if (location) fetchWeatherData(selected);
+	$: selectedLocationIndex =
+		$selectedLocation === -1 ? 0 : $weatherLocations.findIndex((d) => d.id === $selectedLocation);
+	$: console.log(selectedLocationIndex);
+	$: location = $weatherLocations[selectedLocationIndex];
+	$: if (location) fetchWeatherData(selectedLocationIndex);
 
 	$: weatherData = rawWeatherData ? crunchWeatherData(rawWeatherData) : null;
 

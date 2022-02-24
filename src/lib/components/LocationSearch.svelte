@@ -153,7 +153,7 @@
 	.item {
 		height: 100%;
 		width: 100%;
-		padding: 0.1rem 1rem;
+		padding: 0.3rem 1rem;
 		display: flex;
 		align-items: center;
 		border: none;
@@ -197,7 +197,7 @@
 			transform-origin: 0 50%;
 		}
 		.right {
-			font-size: 2rem;
+			font-size: 1.5rem;
 			transition: transform 0.2s ease, opacity 0.2s ease;
 			&.added {
 				opacity: 0.5;

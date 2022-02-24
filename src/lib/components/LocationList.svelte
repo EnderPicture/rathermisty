@@ -2,6 +2,7 @@
 	import { weatherLocations } from '$lib/store';
 	import { fly } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
+	import { selectedLocation } from '$lib/store';
 
 	const removeLocation = (id: number) => {
 		const index = $weatherLocations.map((l) => l.id).indexOf(id);
@@ -9,6 +10,9 @@
 			d.splice(index, 1);
 			return d;
 		});
+	};
+	const viewLocation = (id: number) => {
+		$selectedLocation = id;
 	};
 </script>
 
@@ -21,7 +25,7 @@
 				in:fly|local={{ y: -10, duration: 300 }}
 				out:fly|local={{ y: 10, duration: 300 }}
 				animate:flip={{ duration: 300 }}
-				on:click={() => removeLocation(location.id)}
+				on:click={() => viewLocation(location.id)}
 			>
 				<div class="left">
 					<p class="title">{location.feature.properties.name || ''}</p>
@@ -30,7 +34,7 @@
 						{location.feature.properties.country || ''}
 					</p>
 				</div>
-				<p class="right">-</p>
+				<p class="right">view</p>
 			</button>
 		{/each}
 	</div>
@@ -55,7 +59,7 @@
 	.item {
 		height: 100%;
 		width: 100%;
-		padding: 0.1rem 1rem;
+		padding: 0.3rem 1rem;
 		display: flex;
 		align-items: center;
 		border: none;
@@ -92,7 +96,7 @@
 			transform-origin: 0 50%;
 		}
 		.right {
-			font-size: 2rem;
+			font-size: 1rem;
 			transition: transform 0.2s ease, opacity 0.2s ease;
 		}
 		p {

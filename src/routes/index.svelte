@@ -7,6 +7,7 @@
 
 <PageTransition>
 	<AllWeather />
+
 	<header>
 		<div class="title">
 			<h1>RatherMisty</h1>
