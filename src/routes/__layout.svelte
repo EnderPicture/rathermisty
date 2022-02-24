@@ -4,8 +4,8 @@
 
 <nav>
 	<div>
-		<a href="/">locations</a>
-		<a href="/weather">weather</a>
+		<a href="/">weather</a>
+		<a href="/locations">locations</a>
 		<a href="/about">about</a>
 	</div>
 </nav>

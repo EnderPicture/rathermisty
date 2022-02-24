@@ -47,26 +47,24 @@
 	$: thisHour = today?.hours.find((hour) => hour.tense === 'now');
 </script>
 
-<PageTransition>
-	{#if thisHour}
-		<section class="mid-width">
-			<p class="intro-text">
-				Currently, it's actually {thisHour.values.temperature_2m}{thisHour.units.temperature_2m} in {location.name}
-			</p>
-			<p class="intro-text">but feels like</p>
-			<p class="temp">
-				{thisHour.values.apparent_temperature}<sub class="unit"
-					>{thisHour.units.apparent_temperature}</sub
-				>
-			</p>
-			<p class="weather">
-				{weatherCodeMap.get(thisHour.values.weathercode)}
-			</p>
-		</section>
-		<AltitudeDisplay {thisHour} />
-		<WeatherTimeLine {weatherData} days={weatherData.days} />
-	{/if}
-</PageTransition>
+{#if thisHour}
+	<section class="mid-width">
+		<p class="intro-text">
+			Currently, it's actually {thisHour.values.temperature_2m}{thisHour.units.temperature_2m} in {location.name}
+		</p>
+		<p class="intro-text">but feels like</p>
+		<p class="temp">
+			{thisHour.values.apparent_temperature}<sub class="unit"
+				>{thisHour.units.apparent_temperature}</sub
+			>
+		</p>
+		<p class="weather">
+			{weatherCodeMap.get(thisHour.values.weathercode)}
+		</p>
+	</section>
+	<AltitudeDisplay {thisHour} />
+	<WeatherTimeLine {weatherData} days={weatherData.days} />
+{/if}
 
 <style lang="scss">
 	.intro-text {

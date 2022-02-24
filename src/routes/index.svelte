@@ -1,10 +1,12 @@
 <script lang="ts">
+	import AllWeather from '$lib/components/AllWeather.svelte';
 	import LocationList from '$lib/components/LocationList.svelte';
 	import LocationSelector from '$lib/components/LocationSearch.svelte';
 	import PageTransition from '$lib/components/PageTransition.svelte';
 </script>
 
 <PageTransition>
+	<AllWeather />
 	<header>
 		<div class="title">
 			<h1>RatherMisty</h1>
@@ -34,7 +36,7 @@
 			margin-left: 0.5rem;
 			height: 4rem;
 		}
-		@media screen and (max-width : 375px)  {
+		@media screen and (max-width: 375px) {
 			h1 {
 				font-size: 2rem;
 			}
@@ -46,7 +48,7 @@
 	h2 {
 		font-size: 1rem;
 		margin: 0;
-		margin-top: -.5rem;
+		margin-top: -0.5rem;
 		font-weight: normal;
 	}
 </style>
