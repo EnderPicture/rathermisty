@@ -3,6 +3,8 @@
 	import { fly } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
 	import { selectedLocation } from '$lib/store';
+	import { page } from '$app/stores';
+	import { goto } from '$app/navigation';
 
 	const removeLocation = (id: number) => {
 		const index = $weatherLocations.map((l) => l.id).indexOf(id);
@@ -13,6 +15,11 @@
 	};
 	const viewLocation = (id: number) => {
 		$selectedLocation = id;
+		if ($page.path === '/') {
+			document.body.scrollIntoView({ behavior: 'smooth' });
+		} else {
+			goto('/');
+		}
 	};
 </script>
 

@@ -10,11 +10,11 @@
 
 	let rawWeatherData: RawWeatherData | null = null;
 
-	const fetchWeatherData = (index: number) => {
-		const location = $weatherLocations[index];
+	const fetchWeatherData = () => {
+		const location = $weatherLocations[selectedLocationIndex];
 		const now = Date.now();
-		// if (location.lastFetch + 60 * 60 * 1000 < now) {
-		if (location.lastFetch + 1000 < now) {
+		if (location.lastFetch + 60 * 60 * 1000 < now) {
+			// if (location.lastFetch + 1000 < now) {
 			const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 			const lat = location.cords.lat;
 			const lon = location.cords.lon;
@@ -25,8 +25,8 @@
 				.then((data: RawWeatherData) => {
 					rawWeatherData = data;
 					weatherLocations.update((locs) => {
-						locs[index].lastFetch = Date.now();
-						locs[index].rawWeatherData = data;
+						locs[selectedLocationIndex].lastFetch = Date.now();
+						locs[selectedLocationIndex].rawWeatherData = data;
 						return locs;
 					});
 				})
@@ -40,9 +40,8 @@
 
 	$: selectedLocationIndex =
 		$selectedLocation === -1 ? 0 : $weatherLocations.findIndex((d) => d.id === $selectedLocation);
-	$: console.log(selectedLocationIndex);
 	$: location = $weatherLocations[selectedLocationIndex];
-	$: if (location) fetchWeatherData(selectedLocationIndex);
+	$: if (location) fetchWeatherData();
 
 	$: weatherData = rawWeatherData ? crunchWeatherData(rawWeatherData) : null;
 
