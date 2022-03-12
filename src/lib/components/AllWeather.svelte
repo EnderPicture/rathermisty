@@ -8,7 +8,7 @@
 	import type { RawWeatherData, WeatherData } from '$lib/types/weather';
 	import { selectedLocation } from '$lib/store';
 
-	let rawWeatherData: RawWeatherData | null = null;
+	let rawWeatherData: RawWeatherData = null;
 
 	const fetchWeatherData = () => {
 		const location = $weatherLocations[selectedLocationIndex];
@@ -42,6 +42,7 @@
 		$selectedLocation === -1 ? 0 : $weatherLocations.findIndex((d) => d.id === $selectedLocation);
 	$: location = $weatherLocations[selectedLocationIndex];
 	$: if (location) fetchWeatherData();
+	else rawWeatherData = null;
 
 	$: weatherData = rawWeatherData ? crunchWeatherData(rawWeatherData) : null;
 
