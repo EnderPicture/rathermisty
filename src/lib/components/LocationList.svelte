@@ -24,7 +24,7 @@
 </script>
 
 <section class="loc-list">
-	<h2>Favorate locations</h2>
+	<h2>Favorite locations</h2>
 	<div class="items">
 		{#each $weatherLocations as location, index (location)}
 			<button
@@ -46,7 +46,7 @@
 		{/each}
 	</div>
 	{#if $weatherLocations.length === 0}
-		<p>no favorate locations, add one above</p>
+		<p>no favorite locations, add one above</p>
 	{/if}
 </section>
 
