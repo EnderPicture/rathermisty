@@ -44,7 +44,6 @@
 		}) || [];
 
 	const addLoc = (id: number) => {
-		console.log(id);
 		let listItem = locationList[locationList.map((f) => f.id).indexOf(id)];
 		let feature = listItem.feature;
 		weatherLocations.update((d) => {

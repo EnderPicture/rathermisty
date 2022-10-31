@@ -13,7 +13,6 @@ if (browser) {
 			selectedLocationValue !== -1 &&
 			!weatherLocationsValue.find((d) => d.id === selectedLocationValue)
 		) {
-			console.log('hi');
 			selectedLocation.set(-1);
 		}
 	};
